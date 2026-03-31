@@ -15,11 +15,11 @@ jobs:
         run: |
           minor_version=$(git describe --always | awk --field-separator=. '{ print $1 "." $2 }')
           git switch -c "hotfix/$minor_version"
-          git push --set-upstream origin hotfix/0.0
+          git push --set-upstream origin "hotfix/$minor_version"
       - name: Create docs branch
         if: always()
         run: |
           minor_version=$(git describe --always | awk --field-separator=. '{ print $1 "." $2 }')
           git switch -c "docs/$minor_version"
-          git push --set-upstream origin hotfix/0.0
+          git push --set-upstream origin "docs/$minor_version"
 
