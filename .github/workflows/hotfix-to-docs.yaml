@@ -1,0 +1,33 @@
+name: Push hotfix tag to relevant docs branch
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Merge from docs and create PR
+        run: |
+          current_tag="$(git describe --exact-match)"
+          if [[ ${current_tag} = *.0 ]]; then
+            echo "Minor release, not merging" >> $GITHUB_SUMMARY
+            exit 0
+          fi
+          hotfix_branch="$(git branch --show-current)"
+          docs_branch="${hotfix_branch/hotfix/docs}"
+          git switch -c "merge-to-docs/${hotfix_branch}"
+          git merge "$docs_branch"
+          git push
+          gh pr create --title "docs(auto): merge $current_tag to $docs-branch" --base "${docs_branch}"
+
+
