@@ -20,7 +20,7 @@ jobs:
         run: |
           current_tag="$(git describe --exact-match)"
           if [[ ${current_tag} = *.0 ]]; then
-            echo "Minor release, not merging" >> $GITHUB_SUMMARY
+            echo "Minor release, not merging"
             exit 0
           fi
           hotfix_branch="$(git branch --show-current)"
