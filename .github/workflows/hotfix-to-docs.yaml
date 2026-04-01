@@ -27,7 +27,7 @@ jobs:
           docs_branch="docs/${minor_version}"
           git switch -c "merge-to-docs/${minor_version}"
           git merge "origin/$docs_branch"
-          git push
+          git push --set-upstream origin
           gh pr create --title "docs(auto): merge $current_tag to $docs-branch" --base "${docs_branch}"
 
 
