@@ -23,9 +23,9 @@ jobs:
             echo "Minor release, not merging" >> $GITHUB_SUMMARY
             exit 0
           fi
-          hotfix_branch="$(git branch --show-current)"
-          docs_branch="${hotfix_branch/hotfix/docs}"
-          git switch -c "merge-to-docs/${hotfix_branch}"
+          minor_version=$(git describe --always | awk --field-separator=. '{ print $1 "." $2 }')
+          docs_branch="docs/${minor_version}"
+          git switch -c "merge-to-docs/${minor_version}"
           git merge "$docs_branch"
           git push
           gh pr create --title "docs(auto): merge $current_tag to $docs-branch" --base "${docs_branch}"
