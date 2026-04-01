@@ -1,0 +1,4 @@
+Current state:
+
+- Need to generate a token as a secret to give both workflows the workflows permission
+    https://github.com/lengau/docs-machinery/actions/runs/23850334550/job/69528390204
