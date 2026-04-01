@@ -26,7 +26,7 @@ jobs:
           minor_version=$(git describe --always | awk --field-separator=. '{ print $1 "." $2 }')
           docs_branch="docs/${minor_version}"
           git switch -c "merge-to-docs/${minor_version}"
-          git merge "$docs_branch"
+          git merge "origin/$docs_branch"
           git push
           gh pr create --title "docs(auto): merge $current_tag to $docs-branch" --base "${docs_branch}"
 
